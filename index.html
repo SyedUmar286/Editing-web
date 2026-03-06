@@ -1,46 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pro Image Editor</title>
+<title>Guess The Word Maker</title>
 <link rel="stylesheet" href="style.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>
 </head>
+
 <body>
 
-<h1>Pro Image Editor</h1>
+<h1>Guess The Word Video Maker</h1>
 
-<div class="toolbar">
-  <input type="file" id="uploadImage">
-  <button onclick="crop()">Crop</button>
-  <button onclick="resize()">Resize</button>
-  <button onclick="rotate(90)">Rotate 90°</button>
-  <button onclick="flip('horizontal')">Flip H</button>
-  <button onclick="flip('vertical')">Flip V</button>
-  <button onclick="addText()">Add Text</button>
-  <button onclick="draw()">Draw</button>
-  <button onclick="erase()">Eraser</button>
-  <button onclick="addSticker()">Sticker</button>
-  <button onclick="zoom(1.2)">Zoom In</button>
-  <button onclick="zoom(0.8)">Zoom Out</button>
-  <button onclick="undo()">Undo</button>
-  <button onclick="redo()">Redo</button>
-  <button onclick="bringForward()">Bring Forward</button>
-  <button onclick="sendBackward()">Send Backward</button>
-  <button onclick="changeBG()">Background</button>
-  <button onclick="applyFilter('grayscale')">Grayscale</button>
-  <button onclick="applyFilter('sepia')">Sepia</button>
-  <button onclick="applyFilter('invert')">Invert</button>
-  <button onclick="applyFilter('brightness')">Brightness</button>
-  <button onclick="applyFilter('contrast')">Contrast</button>
-  <button onclick="applyFilter('saturation')">Saturation</button>
-  <button onclick="applyFilter('blur')">Blur</button>
-  <button onclick="downloadImage()">Download</button>
+<div class="box">
+<button onclick="start()">Create Video</button>
 </div>
 
-<canvas id="canvas" width="900" height="600"></canvas>
-
 <script src="script.js"></script>
+
 </body>
 </html>
