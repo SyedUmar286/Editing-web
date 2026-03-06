@@ -1,0 +1,19 @@
+body{
+font-family:Arial;
+text-align:center;
+background:#fafafa;
+}
+
+canvas{
+border:2px solid #ccc;
+margin-top:20px;
+}
+
+.toolbar{
+margin-top:20px;
+}
+
+button{
+margin:5px;
+padding:10px 15px;
+}
