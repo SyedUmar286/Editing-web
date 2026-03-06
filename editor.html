@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>Quiz Editor</title>
+
+<link rel="stylesheet" href="editor.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+
+</head>
+
+<body>
+
+<h2>Guess Video Editor</h2>
+
+<div class="toolbar">
+
+<input type="color" id="bg">
+
+<input type="file" id="upload">
+
+<button onclick="addText()">Text</button>
+
+<button onclick="addEmoji()">Emoji</button>
+
+<button onclick="addTimer()">Timer</button>
+
+<button onclick="download()">Download</button>
+
+</div>
+
+<canvas id="canvas" width="900" height="600"></canvas>
+
+<script src="editor.js"></script>
+
+</body>
+
+</html>
