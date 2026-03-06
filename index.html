@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ultimate Media Editor</title>
+
+<!-- Fabric.js for Image Editing -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>
+
+<!-- Video.js for video preview -->
+<link href="https://vjs.zencdn.net/7.23.0/video-js.css" rel="stylesheet" />
+<script src="https://vjs.zencdn.net/7.23.0/video.min.js"></script>
+
+<!-- WaveSurfer.js for Audio Editing -->
+<script src="https://unpkg.com/wavesurfer.js"></script>
+
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>Ultimate Media Editor</h1>
+
+<!-- Tabs for selecting editor -->
+<div class="tabs">
+  <button onclick="showTab('image')">Image Editor</button>
+  <button onclick="showTab('video')">Video Editor</button>
+  <button onclick="showTab('audio')">Audio Editor</button>
+</div>
+
+<!-- IMAGE EDITOR -->
+<div id="image" class="editor-tab">
+  <h2>Image Editor</h2>
+  <input type="file" id="imgUpload">
+  <div class="toolbar">
+    <button onclick="addText()">Add Text</button>
+    <button onclick="rotateImage()">Rotate</button>
+    <button onclick="applyFilter()">Grayscale Filter</button>
+    <button onclick="downloadImage()">Download</button>
+  </div>
+  <canvas id="imgCanvas" width="800" height="600"></canvas>
+</div>
+
+<!-- VIDEO EDITOR -->
+<div id="video" class="editor-tab" style="display:none;">
+  <h2>Video Editor</h2>
+  <input type="file" id="videoUpload">
+  <video id="videoPlayer" class="video-js vjs-big-play-centered" width="800" height="450" controls></video>
+  <div class="toolbar">
+    <button onclick="trimVideo()">Trim Video</button>
+    <button onclick="addTextToVideo()">Add Text Overlay</button>
+  </div>
+</div>
+
+<!-- AUDIO EDITOR -->
+<div id="audio" class="editor-tab" style="display:none;">
+  <h2>Audio Editor</h2>
+  <input type="file" id="audioUpload">
+  <div id="waveform"></div>
+  <div class="toolbar">
+    <button onclick="playAudio()">Play</button>
+    <button onclick="stopAudio()">Stop</button>
+    <button onclick="downloadAudio()">Download</button>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
