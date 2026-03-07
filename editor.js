@@ -149,8 +149,7 @@ let obj = canvas.getActiveObject();
 
 if(obj){
 
-canvas.bringToFront(obj);
-
+canvas.bringForward(obj);
 canvas.renderAll();
 
 }
@@ -163,8 +162,7 @@ let obj = canvas.getActiveObject();
 
 if(obj){
 
-canvas.sendToBack(obj);
-
+canvas.sendBackwards(obj);
 canvas.renderAll();
 
 }
