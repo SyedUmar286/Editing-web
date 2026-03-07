@@ -100,3 +100,45 @@ link.download="quiz.png";
 link.click();
 
 }
+
+document.getElementById("textColor").oninput=function(){
+
+let obj = canvas.getActiveObject();
+
+if(obj && obj.type==="textbox"){
+
+obj.set("fill", this.value);
+
+canvas.renderAll();
+
+}
+
+}
+
+function changeFont(){
+
+let obj = canvas.getActiveObject();
+
+let size = document.getElementById("fontSize").value;
+
+if(obj && obj.type==="textbox"){
+
+obj.set("fontSize", size);
+
+canvas.renderAll();
+
+}
+
+}
+
+function deleteObject(){
+
+let obj = canvas.getActiveObject();
+
+if(obj){
+
+canvas.remove(obj);
+
+}
+
+}
