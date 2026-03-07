@@ -21,7 +21,9 @@
 <div class="toolbar">
 
 <input type="color" id="bg">
-
+  
+<input type="color" id="textColor">
+  
 <input type="file" id="upload">
 
 <button onclick="addText()">Text</button>
@@ -41,3 +43,17 @@
 </body>
 
 </html>
+
+document.getElementById("textColor").oninput=function(){
+
+let obj = canvas.getActiveObject();
+
+if(obj && obj.type==="textbox"){
+
+obj.set("fill", this.value);
+
+canvas.renderAll();
+
+}
+
+}
