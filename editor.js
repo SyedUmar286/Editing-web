@@ -142,3 +142,31 @@ canvas.remove(obj);
 }
 
 }
+
+function bringFront(){
+
+let obj = canvas.getActiveObject();
+
+if(obj){
+
+canvas.bringToFront(obj);
+
+canvas.renderAll();
+
+}
+
+}
+
+function sendBack(){
+
+let obj = canvas.getActiveObject();
+
+if(obj){
+
+canvas.sendToBack(obj);
+
+canvas.renderAll();
+
+}
+
+}
