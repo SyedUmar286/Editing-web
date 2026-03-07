@@ -198,7 +198,9 @@ let obj = canvas.getActiveObject();
 
 if(obj){
 
-obj.selectable=false;
+obj.selectable = false;
+canvas.discardActiveObject();
+canvas.renderAll();
 
 }
 
