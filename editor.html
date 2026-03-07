@@ -22,11 +22,15 @@
 
 <input type="color" id="bg">
   
-<input type="color" id="textColor">
+<input type="color" id="textColor">  
   
 <input type="file" id="upload">
 
 <button onclick="addText()">Text</button>
+
+<input type="number" id="fontSize" placeholder="Font Size">
+
+<button onclick="changeFont()">Set Font</button>  
 
 <button onclick="addEmoji()">Emoji</button>
 
@@ -43,17 +47,3 @@
 </body>
 
 </html>
-
-document.getElementById("textColor").oninput=function(){
-
-let obj = canvas.getActiveObject();
-
-if(obj && obj.type==="textbox"){
-
-obj.set("fill", this.value);
-
-canvas.renderAll();
-
-}
-
-}
