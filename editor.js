@@ -170,3 +170,50 @@ canvas.renderAll();
 }
 
 }
+
+function duplicate(){
+
+let obj = canvas.getActiveObject();
+
+if(obj){
+
+obj.clone(function(clone){
+
+clone.set({
+left: obj.left + 20,
+top: obj.top + 20
+});
+
+canvas.add(clone);
+
+});
+
+}
+
+}
+
+function lockLayer(){
+
+let obj = canvas.getActiveObject();
+
+if(obj){
+
+obj.selectable=false;
+
+}
+
+}
+
+function centerText(){
+
+let obj = canvas.getActiveObject();
+
+if(obj){
+
+obj.center();
+
+canvas.renderAll();
+
+}
+
+  }
