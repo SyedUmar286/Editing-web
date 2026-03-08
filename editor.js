@@ -357,4 +357,4 @@ canvas.renderAll();
 
 }
 
-  }
+}
