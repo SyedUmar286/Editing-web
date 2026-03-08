@@ -1,8 +1,20 @@
 const canvas = new fabric.Canvas('canvas');
 
+let history = [];
+let redoStack = [];
+
 document.getElementById("bg").oninput=function(){
 canvas.setBackgroundColor(this.value,canvas.renderAll.bind(canvas));
 };
+
+canvas.on("object:added", saveHistory);
+canvas.on("object:modified", saveHistory);
+canvas.on("object:removed", saveHistory);
+
+function saveHistory(){
+redoStack = [];
+history.push(JSON.stringify(canvas));
+}
 
 document.getElementById("upload").addEventListener("change",function(e){
 
@@ -310,3 +322,39 @@ canvas.renderAll();
 }
 
 }
+
+function undo(){
+
+if(history.length > 0){
+
+redoStack.push(JSON.stringify(canvas));
+
+let state = history.pop();
+
+canvas.loadFromJSON(state,function(){
+
+canvas.renderAll();
+
+});
+
+}
+
+}
+
+function redo(){
+
+if(redoStack.length > 0){
+
+history.push(JSON.stringify(canvas));
+
+let state = redoStack.pop();
+
+canvas.loadFromJSON(state,function(){
+
+canvas.renderAll();
+
+});
+
+}
+
+  }
