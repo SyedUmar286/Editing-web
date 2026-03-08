@@ -1,5 +1,8 @@
 const canvas = new fabric.Canvas('canvas');
 
+canvas.setWidth(1080);
+canvas.setHeight(1920);
+
 let centerX = canvas.getWidth()/2;
 let centerY = canvas.getHeight()/2;
 
