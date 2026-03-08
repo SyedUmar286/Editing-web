@@ -121,7 +121,7 @@ let obj = canvas.getActiveObject();
 
 let size = document.getElementById("fontSize").value;
 
-if(obj && obj.type==="textbox"){
+if(obj){
 
 obj.set("fontSize", size);
 
