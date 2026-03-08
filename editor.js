@@ -225,7 +225,7 @@ function changeFontFamily(){
 let obj = canvas.getActiveObject();
 let font = document.getElementById("fontFamily").value;
 
-if(obj && obj.type==="textbox"){
+if(obj){
 
 obj.set("fontFamily",font);
 canvas.renderAll();
@@ -238,13 +238,14 @@ function addEmojiPicker(){
 
 let emoji = document.getElementById("emojiPicker").value;
 
-let text = new fabric.Textbox(emoji,{
+let emojiText = new fabric.Text(emoji,{
 left:200,
 top:200,
 fontSize:60
 });
 
-canvas.add(text);
+canvas.add(emojiText);
+canvas.renderAll();
 
 }
 
