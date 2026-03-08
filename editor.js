@@ -1,5 +1,8 @@
 const canvas = new fabric.Canvas('canvas');
 
+let centerX = canvas.getWidth()/2;
+let centerY = canvas.getHeight()/2;
+
 let history = [];
 let redoStack = [];
 
@@ -358,3 +361,64 @@ canvas.renderAll();
 }
 
 }
+
+document.addEventListener("keydown", function(e){
+
+// DELETE KEY
+if(e.key === "Delete"){
+
+let obj = canvas.getActiveObject();
+if(obj){
+canvas.remove(obj);
+canvas.renderAll();
+}
+
+}
+
+// CTRL + D (duplicate)
+if(e.ctrlKey && e.key === "d"){
+
+e.preventDefault();
+
+let obj = canvas.getActiveObject();
+
+if(obj){
+
+obj.clone(function(clone){
+
+clone.set({
+left: obj.left + 20,
+top: obj.top + 20
+});
+
+canvas.add(clone);
+
+});
+
+}
+
+}
+
+// CTRL + Z (undo)
+if(e.ctrlKey && e.key === "z"){
+
+e.preventDefault();
+undo();
+
+}
+
+});
+
+canvas.on('object:moving', function(e){
+
+let obj = e.target;
+
+if(Math.abs(obj.left - centerX) < 10){
+obj.left = centerX;
+}
+
+if(Math.abs(obj.top - centerY) < 10){
+obj.top = centerY;
+}
+
+});
