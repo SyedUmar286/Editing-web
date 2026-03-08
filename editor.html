@@ -12,6 +12,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
 
+<link href="https://fonts.googleapis.com/css2?family=Poppins&family=Bangers&family=Lobster&family=Anton&family=Oswald&family=Montserrat&family=Raleway&family=Pacifico&family=Playfair+Display&family=Rubik&display=swap" rel="stylesheet">
+  
 </head>
 
 <body>
@@ -27,6 +29,53 @@
 <input type="file" id="upload">
 
 <button onclick="addText()">Text</button>
+  
+<select id="fontFamily">
+<option value="Arial">Arial</option>
+<option value="Poppins">Poppins</option>
+<option value="Bangers">Bangers</option>
+<option value="Lobster">Lobster</option>
+<option value="Anton">Anton</option>
+<option value="Oswald">Oswald</option>
+<option value="Montserrat">Montserrat</option>
+<option value="Raleway">Raleway</option>
+<option value="Pacifico">Pacifico</option>
+<option value="Playfair Display">Playfair</option>
+<option value="Rubik">Rubik</option>
+</select>
+
+<button onclick="changeFontFamily()">Font</button>
+
+<button onclick="addOutline()">Outline</button>
+
+<button onclick="addShadow()">Shadow</button>
+
+<button onclick="addGradient()">Gradient</button>
+
+<select id="emojiPicker">
+<option>😀</option>
+<option>😂</option>
+<option>😍</option>
+<option>😎</option>
+<option>🔥</option>
+<option>⭐</option>
+<option>🎮</option>
+<option>⚽</option>
+<option>🏀</option>
+<option>🎬</option>
+<option>🚀</option>
+<option>🌍</option>
+<option>🍕</option>
+<option>🍔</option>
+<option>🐱</option>
+<option>🐶</option>
+<option>🦁</option>
+<option>🐼</option>
+<option>🌈</option>
+<option>🎵</option>
+</select>
+
+<button onclick="addEmojiPicker()">Add Emoji</button>  
 
 <input type="number" id="fontSize" placeholder="Font Size">
 
