@@ -219,3 +219,90 @@ canvas.renderAll();
 }
 
   }
+
+function changeFontFamily(){
+
+let obj = canvas.getActiveObject();
+let font = document.getElementById("fontFamily").value;
+
+if(obj && obj.type==="textbox"){
+
+obj.set("fontFamily",font);
+canvas.renderAll();
+
+}
+
+}
+
+function addEmojiPicker(){
+
+let emoji = document.getElementById("emojiPicker").value;
+
+let text = new fabric.Textbox(emoji,{
+left:200,
+top:200,
+fontSize:60
+});
+
+canvas.add(text);
+
+}
+
+function addOutline(){
+
+let obj = canvas.getActiveObject();
+
+if(obj){
+
+obj.set({
+stroke:"black",
+strokeWidth:2
+});
+
+canvas.renderAll();
+
+}
+
+}
+
+function addShadow(){
+
+let obj = canvas.getActiveObject();
+
+if(obj){
+
+obj.set("shadow","5px 5px 10px rgba(0,0,0,0.5)");
+canvas.renderAll();
+
+}
+
+}
+
+function addGradient(){
+
+let obj = canvas.getActiveObject();
+
+if(obj){
+
+obj.set("fill", new fabric.Gradient({
+
+type:"linear",
+coords:{
+x1:0,
+y1:0,
+x2:200,
+y2:0
+},
+
+colorStops:[
+{offset:0,color:"red"},
+{offset:1,color:"yellow"}
+]
+
+}));
+
+canvas.renderAll();
+
+}
+
+}
