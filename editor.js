@@ -227,7 +227,10 @@ let font = document.getElementById("fontFamily").value;
 
 if(obj){
 
-obj.set("fontFamily",font);
+obj.set({
+fontFamily: font
+});
+
 canvas.renderAll();
 
 }
