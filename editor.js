@@ -425,3 +425,53 @@ obj.top = centerY;
 }
 
 });
+
+async function removeBackground(){
+
+let obj = canvas.getActiveObject();
+
+if(!obj || obj.type !== "image"){
+alert("Select image first");
+return;
+}
+
+let imgElement = obj._element;
+
+const net = await bodyPix.load();
+
+const segmentation = await net.segmentPerson(imgElement);
+
+const canvasTemp = document.createElement("canvas");
+canvasTemp.width = imgElement.width;
+canvasTemp.height = imgElement.height;
+
+const ctx = canvasTemp.getContext("2d");
+ctx.drawImage(imgElement,0,0);
+
+let imageData = ctx.getImageData(0,0,canvasTemp.width,canvasTemp.height);
+
+for(let i=0;i<segmentation.data.length;i++){
+
+if(segmentation.data[i] === 0){
+imageData.data[i*4+3] = 0;
+}
+
+}
+
+ctx.putImageData(imageData,0,0);
+
+fabric.Image.fromURL(canvasTemp.toDataURL(),function(newImg){
+
+newImg.set({
+left: obj.left,
+top: obj.top,
+scaleX: obj.scaleX,
+scaleY: obj.scaleY
+});
+
+canvas.remove(obj);
+canvas.add(newImg);
+
+});
+
+}
