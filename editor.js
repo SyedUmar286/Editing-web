@@ -475,3 +475,40 @@ canvas.add(newImg);
 });
 
 }
+
+let eraseMode = false;
+
+function enableErase(){
+
+let obj = canvas.getActiveObject();
+
+if(!obj || obj.type !== "image"){
+alert("Select image first");
+return;
+}
+
+eraseMode = true;
+
+canvas.isDrawingMode = true;
+
+canvas.freeDrawingBrush.width = 30;
+
+canvas.freeDrawingBrush.color = "rgba(0,0,0,1)";
+
+}
+
+canvas.on("path:created", function(e){
+
+if(!eraseMode) return;
+
+let path = e.path;
+
+let img = canvas.getActiveObject();
+
+if(!img) return;
+
+img.globalCompositeOperation = "destination-out";
+
+canvas.renderAll();
+
+});
