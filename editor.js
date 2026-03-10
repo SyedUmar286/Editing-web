@@ -3,6 +3,9 @@ const canvas = new fabric.Canvas('canvas');
 canvas.setWidth(1080);
 canvas.setHeight(1920);
 
+canvas.backgroundColor = 'rgba(0,0,0,0)'; // Isse canvas transparent ho jayega
+canvas.renderAll();
+
 let centerX = canvas.getWidth()/2;
 let centerY = canvas.getHeight()/2;
 
