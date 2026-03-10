@@ -26,7 +26,10 @@
   
 <label style="font-size: 10px; display: inline-grid; vertical-align: middle;">Text Color<input type="color" id="textColor"></label>
   
-<label style="font-size: 10px; display: inline-grid; vertical-align: middle;">Add Layer<input type="file" id="upload"></label>
+<label style="font-size: 10px; display: inline-grid; vertical-align: middle; text-align: center;">
+  Add Layer
+  <input type="file" id="upload">
+</label>
   
 <button onclick="addText()">Text</button>
   
@@ -100,7 +103,10 @@
 
 <button onclick="deleteObject()">Delete</button>
 
-<button onclick="removeBackground()">Only Person</button>
+<label style="font-size: 10px; display: inline-grid; vertical-align: middle; text-align: center;">
+  Only Person
+  <button onclick="removeBackground()" style="width: 100%;">Remove BG</button>
+</label>
   
 <button onclick="download()">Download</button>
 
