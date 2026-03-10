@@ -478,10 +478,23 @@ canvas.add(newImg);
 
 function enableEraser() {
     canvas.isDrawingMode = true;
-    canvas.freeDrawingBrush = new fabric.EraserBrush(canvas);
-    canvas.freeDrawingBrush.width = 15; // Eraser ka size
+    
+    // Agar eraser brush library kaam nahi kar rahi, toh hum 'destination-out' use karenge
+    // Ye pixels ko mita kar transparent kar deta hai
+    canvas.freeDrawingBrush = new fabric.PencilBrush(canvas);
+    canvas.freeDrawingBrush.width = 20; // Eraser ka size
+    canvas.freeDrawingBrush.color = 'rgba(0,0,0,1)'; // Isse farq nahi padta
+    
+    // Ye hai asli jaadu jo mitaayega:
+    canvas.freeDrawingBrush.globalCompositeOperation = 'destination-out';
+    
+    alert("Eraser On! Ab mitao.");
 }
 
 function disableEraser() {
-    canvas.isDrawingMode = false; // Isse wapas objects select aur move honge
+    canvas.isDrawingMode = false;
+    // Wapas normal drawing mode par laane ke liye (agar kabhi chahiye ho)
+    if(canvas.freeDrawingBrush) {
+        canvas.freeDrawingBrush.globalCompositeOperation = 'source-over';
+    }
 }
