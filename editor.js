@@ -476,31 +476,24 @@ canvas.add(newImg);
 
 }
 
-// Eraser ko activate karne ka sahi tareeka
+// Eraser functionality
 function enableEraser() {
     canvas.isDrawingMode = true;
     
-    // PencilBrush use karenge kyunki ye har browser mein chalti hai
-    canvas.freeDrawingBrush = new fabric.PencilBrush(canvas);
-    
-    // Eraser ka size yahan se bada kar sakte ho
-    canvas.freeDrawingBrush.width = 30; 
-    
-    // Ye line sabse zaroori hai, ye mitaane ka kaam karti hai
-    canvas.freeDrawingBrush.globalCompositeOperation = 'destination-out';
-    
-    // Taaki user ko pata chale mita raha hai, halka grey dikhega mitaate waqt
-    canvas.freeDrawingBrush.color = 'rgba(0,0,0,1)'; 
-    
-    console.log("Eraser Mode On");
+    // Hum naya EraserBrush use karenge jo library humne add ki thi
+    if (fabric.EraserBrush) {
+        canvas.freeDrawingBrush = new fabric.EraserBrush(canvas);
+        canvas.freeDrawingBrush.width = 20; // Yahan se size chota kar diya hai
+    } else {
+        // Agar library load nahi hui toh ye backup mitaane ke liye
+        canvas.freeDrawingBrush = new fabric.PencilBrush(canvas);
+        canvas.freeDrawingBrush.globalCompositeOperation = 'destination-out';
+        canvas.freeDrawingBrush.width = 20;
+    }
+    alert("Eraser On: Ab mouse se mitao!");
 }
 
-// Wapas normal mode (mouse pointer) par aane ke liye
 function disableEraser() {
     canvas.isDrawingMode = false;
-    // Normal mode par wapas set karna zaroori hai
-    canvas.getObjects().forEach(obj => {
-        obj.globalCompositeOperation = 'source-over';
-    });
-    console.log("Eraser Mode Off");
+    alert("Eraser Off: Ab objects move kar sakte ho.");
 }
