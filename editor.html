@@ -22,13 +22,19 @@
 
 <div class="toolbar">
 
-<label style="font-size: 10px; display: inline-grid; vertical-align: middle;">BG Color<input type="color" id="bg"></label>
+<label style="font-size: 11px; display: inline-flex; flex-direction: column-reverse; align-items: center; vertical-align: middle; margin-right: 10px;">
+  <span>BG Color</span>
+  <input type="color" id="bg" style="width: 40px; height: 30px; cursor: pointer;">
+</label>
   
-<label style="font-size: 10px; display: inline-grid; vertical-align: middle;">Text Color<input type="color" id="textColor"></label>
+<label style="font-size: 11px; display: inline-flex; flex-direction: column-reverse; align-items: center; vertical-align: middle; margin-right: 15px;">
+  <span>Text Color</span>
+  <input type="color" id="textColor" style="width: 40px; height: 30px; cursor: pointer;">
+</label>
   
-<label style="font-size: 10px; display: inline-flex; flex-direction: column; align-items: center; vertical-align: bottom; margin: 0 5px;">
-  <span style="margin-bottom: 2px;">Add Layer</span>
-  <input type="file" id="upload" style="width: 100px; font-size: 9px;">
+<label style="font-size: 12px; font-weight: bold; display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle; background: #f0f0f0; padding: 5px; border: 1px solid #ccc; border-radius: 4px;">
+  <span style="margin-bottom: 4px;">Add Layer (Choose Image)</span>
+  <input type="file" id="upload" style="font-size: 11px; width: 180px;">
 </label>
   
 <button onclick="addText()">Text</button>
