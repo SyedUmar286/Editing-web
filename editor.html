@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="editor.css">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>
+<script src="https://unpkg.com/fabric-eraser-brush"></script>  
 <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins&family=Bangers&family=Lobster&family=Anton&family=Oswald&family=Montserrat&family=Raleway&family=Pacifico&family=Playfair+Display&family=Rubik&display=swap" rel="stylesheet">
@@ -111,6 +112,17 @@
 
 <label style="font-size: 10px; display: inline-grid; vertical-align: middle; text-align: center;">
   Only Person
+
+<label style="font-size: 10px; display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle; margin: 0 5px;">
+  <span>Manual Eraser</span>
+  <button onclick="enableEraser()" style="padding: 5px;">Eraser On</button>
+</label>
+
+<label style="font-size: 10px; display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle; margin: 0 5px;">
+  <span>Stop Eraser</span>
+  <button onclick="disableEraser()" style="padding: 5px;">Move Tool</button>
+</label>
+  
   <button onclick="removeBackground()" style="width: 100%;">Remove BG</button>
 </label>
      
