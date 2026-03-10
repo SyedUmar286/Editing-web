@@ -476,39 +476,25 @@ canvas.add(newImg);
 
 }
 
-let eraseMode = false;
-
 function enableErase(){
 
 let obj = canvas.getActiveObject();
 
-if(!obj || obj.type !== "image"){
+if(!obj){
 alert("Select image first");
 return;
 }
 
-eraseMode = true;
-
 canvas.isDrawingMode = true;
+
+canvas.freeDrawingBrush = new fabric.EraserBrush(canvas);
 
 canvas.freeDrawingBrush.width = 30;
 
-canvas.freeDrawingBrush.color = "rgba(0,0,0,1)";
-
 }
 
-canvas.on("path:created", function(e){
+function disableErase(){
 
-if(!eraseMode) return;
+canvas.isDrawingMode = false;
 
-let path = e.path;
-
-let img = canvas.getActiveObject();
-
-if(!img) return;
-
-img.globalCompositeOperation = "destination-out";
-
-canvas.renderAll();
-
-});
+}
