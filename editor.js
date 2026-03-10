@@ -476,25 +476,12 @@ canvas.add(newImg);
 
 }
 
-function enableErase(){
-
-let obj = canvas.getActiveObject();
-
-if(!obj){
-alert("Select image first");
-return;
+function enableEraser() {
+    canvas.isDrawingMode = true;
+    canvas.freeDrawingBrush = new fabric.EraserBrush(canvas);
+    canvas.freeDrawingBrush.width = 15; // Eraser ka size
 }
 
-canvas.isDrawingMode = true;
-
-canvas.freeDrawingBrush = new fabric.EraserBrush(canvas);
-
-canvas.freeDrawingBrush.width = 30;
-
-}
-
-function disableErase(){
-
-canvas.isDrawingMode = false;
-
+function disableEraser() {
+    canvas.isDrawingMode = false; // Isse wapas objects select aur move honge
 }
