@@ -426,53 +426,43 @@ obj.top = centerY;
 
 });
 
-async function removeBackground(){
+async function removeBackgroundSmart() {
+    const activeObject = canvas.getActiveObject();
+    
+    if (!activeObject || activeObject.type !== 'image') {
+        alert("Pehle koi image select karo!");
+        return;
+    }
 
-let obj = canvas.getActiveObject();
+    // Yahan hum window.imgRemoveBackground ka use karenge (Global access)
+    if (typeof window.imgRemoveBackground === 'undefined') {
+        alert("AI Library load ho rahi hai, 5 second ruk kar firse click karo!");
+        return;
+    }
 
-if(!obj || obj.type !== "image"){
-alert("Select image first");
-return;
+    console.log("AI process shuru...");
+    
+    try {
+        // AI call
+        const blob = await window.imgRemoveBackground(activeObject._element);
+        
+        const url = URL.createObjectURL(blob);
+        fabric.Image.fromURL(url, function(newImg) {
+            newImg.set({
+                left: activeObject.left,
+                top: activeObject.top,
+                scaleX: activeObject.scaleX,
+                scaleY: activeObject.scaleY
+            });
+            
+            canvas.remove(activeObject);
+            canvas.add(newImg);
+            canvas.bringToFront(newImg); 
+            canvas.renderAll();
+            alert("Done! Background hat gaya.");
+        });
+    } catch (error) {
+        console.error("AI Error:", error);
+        alert("Background hatane mein error aaya.");
+    }
 }
-
-let imgElement = obj._element;
-
-const net = await bodyPix.load();
-
-const segmentation = await net.segmentPerson(imgElement);
-
-const canvasTemp = document.createElement("canvas");
-canvasTemp.width = imgElement.width;
-canvasTemp.height = imgElement.height;
-
-const ctx = canvasTemp.getContext("2d");
-ctx.drawImage(imgElement,0,0);
-
-let imageData = ctx.getImageData(0,0,canvasTemp.width,canvasTemp.height);
-
-for(let i=0;i<segmentation.data.length;i++){
-
-if(segmentation.data[i] === 0){
-imageData.data[i*4+3] = 0;
-}
-
-}
-
-ctx.putImageData(imageData,0,0);
-
-fabric.Image.fromURL(canvasTemp.toDataURL(),function(newImg){
-
-newImg.set({
-left: obj.left,
-top: obj.top,
-scaleX: obj.scaleX,
-scaleY: obj.scaleY
-});
-
-canvas.remove(obj);
-canvas.add(newImg);
-
-});
-
-}
-
