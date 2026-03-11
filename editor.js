@@ -164,9 +164,7 @@ canvas.remove(obj);
 function bringFront() {
     let obj = canvas.getActiveObject();
     if (obj) {
-        obj.bringToFront();
-        canvas.discardActiveObject();
-        canvas.setActiveObject(obj);
+        obj.bringForward();
         canvas.renderAll();
     }
 }
@@ -174,8 +172,7 @@ function bringFront() {
 function sendBack() {
     let obj = canvas.getActiveObject();
     if (obj) {
-        obj.sendToBack();
-        // Background color ko sabse niche rakhne ke liye check
+        obj.sendBackwards();
         let objects = canvas.getObjects();
         objects.forEach(o => {
             if (o.isBackground === true) {
