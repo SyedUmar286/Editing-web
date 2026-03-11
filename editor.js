@@ -3,9 +3,6 @@ const canvas = new fabric.Canvas('canvas');
 canvas.setWidth(1080);
 canvas.setHeight(1920);
 
-canvas.backgroundColor = 'rgba(0,0,0,0)'; // Isse canvas transparent ho jayega
-canvas.renderAll();
-
 let centerX = canvas.getWidth()/2;
 let centerY = canvas.getHeight()/2;
 
@@ -477,34 +474,4 @@ canvas.add(newImg);
 
 });
 
-}
-
-function enableEraser() {
-    // 1. Drawing mode on karo
-    canvas.isDrawingMode = true;
-    
-    // 2. Pencil brush set karo
-    canvas.freeDrawingBrush = new fabric.PencilBrush(canvas);
-    
-    // 3. Eraser ka size (Isse chota bada kar sakte ho)
-    canvas.freeDrawingBrush.width = 15; 
-    
-    // 4. YE SABSE ZAROORI LINE HAI - Ye mitaane ka kaam karti hai
-    canvas.freeDrawingBrush.globalCompositeOperation = 'destination-out';
-    
-    // 5. Canvas ko batana hai ki mitaate waqt transparent kare
-    canvas.renderAll();
-    
-    alert("Eraser ON: Ab mitao!");
-}
-
-function disableEraser() {
-    canvas.isDrawingMode = false;
-    
-    // Wapas normal mode par set karna
-    canvas.getObjects().forEach(obj => {
-        obj.globalCompositeOperation = 'source-over';
-    });
-    
-    alert("Eraser OFF: Ab objects move karo.");
 }
