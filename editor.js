@@ -517,4 +517,5 @@ async function removeBackgroundSmart() {
         console.error("AI Error:", error);
         alert("Background hatane mein error aaya, console check karo.");
     }
-    }
+}
+
