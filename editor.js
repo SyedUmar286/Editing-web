@@ -171,12 +171,17 @@ function bringFront() {
     }
 }
 
-function bringFront() {
+function sendBack() {
     let obj = canvas.getActiveObject();
     if (obj) {
-        obj.bringToFront();
-        canvas.discardActiveObject();
-        canvas.setActiveObject(obj);
+        obj.sendToBack();
+        // Background color ko sabse niche rakhne ke liye check
+        let objects = canvas.getObjects();
+        objects.forEach(o => {
+            if (o.isBackground === true) {
+                o.sendToBack();
+            }
+        });
         canvas.renderAll();
     }
 }
