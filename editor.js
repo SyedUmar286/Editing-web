@@ -475,3 +475,35 @@ canvas.add(newImg);
 });
 
 }
+
+async function removeBackgroundSmart() {
+    const activeObject = canvas.getActiveObject();
+    if (!activeObject || activeObject.type !== 'image') {
+        alert("please image select!");
+        return;
+    }
+
+    alert("AI background remove please wait...");
+    
+    // Image ka source nikalein
+    const imgElement = activeObject._element;
+
+    // AI Process shuru karein
+    const blob = await imgRemoveBackground(imgElement);
+    
+    // Nayi image canvas par load karein
+    const url = URL.createObjectURL(blob);
+    fabric.Image.fromURL(url, function(newImg) {
+        newImg.set({
+            left: activeObject.left,
+            top: activeObject.top,
+            scaleX: activeObject.scaleX,
+            scaleY: activeObject.scaleY
+        });
+        canvas.remove(activeObject);
+        canvas.add(newImg);
+        canvas.renderAll();
+        alert("Done! Background is remove.");
+    });
+}
+
