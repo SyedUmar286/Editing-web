@@ -476,34 +476,45 @@ canvas.add(newImg);
 
 }
 
+// editor.js mein ye paste karein
 async function removeBackgroundSmart() {
     const activeObject = canvas.getActiveObject();
+    
+    // Check: Kya image select ki hai?
     if (!activeObject || activeObject.type !== 'image') {
-        alert("please image select!");
+        alert("Pehle koi image select karo!");
         return;
     }
 
-    alert("AI background remove please wait...");
-    
-    // Image ka source nikalein
-    const imgElement = activeObject._element;
+    // Check: Kya library load hui hai?
+    if (typeof imglyRemoveBackground === 'undefined') {
+        alert("Error: AI Library load nahi hui. Internet check karo!");
+        return;
+    }
 
-    // AI Process shuru karein
-    const blob = await imgRemoveBackground(imgElement);
+    console.log("AI process shuru...");
     
-    // Nayi image canvas par load karein
-    const url = URL.createObjectURL(blob);
-    fabric.Image.fromURL(url, function(newImg) {
-        newImg.set({
-            left: activeObject.left,
-            top: activeObject.top,
-            scaleX: activeObject.scaleX,
-            scaleY: activeObject.scaleY
+    try {
+        // AI process start
+        const blob = await imglyRemoveBackground(activeObject._element);
+        console.log("AI process khatam, image mil gayi.");
+
+        const url = URL.createObjectURL(blob);
+        fabric.Image.fromURL(url, function(newImg) {
+            newImg.set({
+                left: activeObject.left,
+                top: activeObject.top,
+                scaleX: activeObject.scaleX,
+                scaleY: activeObject.scaleY
+            });
+            
+            canvas.remove(activeObject);
+            canvas.add(newImg);
+            canvas.bringToFront(newImg); 
+            canvas.renderAll();
         });
-        canvas.remove(activeObject);
-        canvas.add(newImg);
-        canvas.renderAll();
-        alert("Done! Background is remove.");
-    });
-}
-
+    } catch (error) {
+        console.error("AI Error:", error);
+        alert("Background hatane mein error aaya, console check karo.");
+    }
+    }
