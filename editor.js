@@ -165,11 +165,9 @@ function bringFront() {
     let obj = canvas.getActiveObject();
     if (obj) {
         let index = canvas.getObjects().indexOf(obj);
-        // Agar object sabse upar nahi hai, toh use ek index upar bhej do
-        if (index < canvas.getObjects().length - 1) {
-            obj.bringForward();
-            canvas.renderAll();
-        }
+        // Object ko ek index upar bhej do
+        canvas.moveTo(obj, index + 1);
+        canvas.renderAll();
     }
 }
 
@@ -177,9 +175,9 @@ function sendBack() {
     let obj = canvas.getActiveObject();
     if (obj) {
         let index = canvas.getObjects().indexOf(obj);
-        // Check karo ke object background (index 0) ke neeche na jaye
-        if (index > 1) { 
-            obj.sendBackwards();
+        // Object ko ek index neeche bhej do (par 0 se neeche nahi)
+        if (index > 0) {
+            canvas.moveTo(obj, index - 1);
             canvas.renderAll();
         }
     }
