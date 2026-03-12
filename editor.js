@@ -164,22 +164,24 @@ canvas.remove(obj);
 function bringFront() {
     let obj = canvas.getActiveObject();
     if (obj) {
-        obj.bringForward();
-        canvas.renderAll();
+        let index = canvas.getObjects().indexOf(obj);
+        // Agar object sabse upar nahi hai, toh use ek index upar bhej do
+        if (index < canvas.getObjects().length - 1) {
+            obj.bringForward();
+            canvas.renderAll();
+        }
     }
 }
 
 function sendBack() {
     let obj = canvas.getActiveObject();
     if (obj) {
-        obj.sendBackwards();
-        let objects = canvas.getObjects();
-        objects.forEach(o => {
-            if (o.isBackground === true) {
-                o.sendToBack();
-            }
-        });
-        canvas.renderAll();
+        let index = canvas.getObjects().indexOf(obj);
+        // Check karo ke object background (index 0) ke neeche na jaye
+        if (index > 1) { 
+            obj.sendBackwards();
+            canvas.renderAll();
+        }
     }
 }
 
