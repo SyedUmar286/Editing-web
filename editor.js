@@ -133,22 +133,6 @@ canvas.renderAll();
 
 }
 
-function changeFont(){
-
-let obj = canvas.getActiveObject();
-
-let size = document.getElementById("fontSize").value;
-
-if(obj){
-
-obj.set("fontSize", size);
-
-canvas.renderAll();
-
-}
-
-}
-
 function deleteObject(){
 
 let obj = canvas.getActiveObject();
@@ -232,21 +216,19 @@ canvas.renderAll();
 
   }
 
-function changeFontFamily(){
-
-let obj = canvas.getActiveObject();
-let font = document.getElementById("fontFamily").value;
-
-if(obj){
-
-obj.set({
-fontFamily: font
-});
-
-canvas.renderAll();
-
-}
-
+function updateTextProperties() {
+    let obj = canvas.getActiveObject();
+    if (obj && (obj.type === "textbox" || obj.type === "text")) {
+        // Font Size Update
+        let size = document.getElementById("fontSize").value;
+        if (size) obj.set("fontSize", parseInt(size));
+        
+        // Font Family Update
+        let font = document.getElementById("fontFamily").value;
+        obj.set("fontFamily", font);
+        
+        canvas.renderAll();
+    }
 }
 
 function addEmojiPicker(){
