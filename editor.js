@@ -216,20 +216,54 @@ canvas.renderAll();
 
   }
 
+// 1. Jab kisi text pe click karein, toh dropdown apne aap sahi font dikhaye
+canvas.on('selection:created', updateInputs);
+canvas.on('selection:updated', updateInputs);
+
+function updateInputs() {
+    let obj = canvas.getActiveObject();
+    if (obj && (obj.type === "textbox" || obj.type === "text")) {
+        document.getElementById("fontFamily").value = obj.fontFamily || "Arial";
+        document.getElementById("fontSize").value = obj.fontSize || 40;
+        let colorInput = document.getElementById("textColor");
+        if (obj.fill && obj.fill.charAt(0) === '#') {
+            colorInput.value = obj.fill;
+        }
+    }
+}
+
+// 2. Font badalne ka naya function (Google Fonts fix ke saath)
 function updateTextProperties() {
     let obj = canvas.getActiveObject();
     if (obj && (obj.type === "textbox" || obj.type === "text")) {
-        // Font Size Update
-        let size = document.getElementById("fontSize").value;
-        if (size) obj.set("fontSize", parseInt(size));
         
-        // Font Family Update
         let font = document.getElementById("fontFamily").value;
-        obj.set("fontFamily", font);
-        
-        canvas.renderAll();
+        let size = document.getElementById("fontSize").value;
+
+        // Font load hone ka wait karein phir apply karein taaki glitch na ho
+        document.fonts.load(`10px "${font}"`).then(function() {
+            obj.set({
+                fontFamily: font,
+                fontSize: parseInt(size) || obj.fontSize
+            });
+            canvas.requestRenderAll(); 
+            saveHistory();
+        });
     }
 }
+
+// 3. Real-time updates: Dropdown change karte hi font badal jayega
+document.getElementById("fontFamily").onchange = updateTextProperties;
+document.getElementById("fontSize").oninput = updateTextProperties;
+
+// Text Color Fix (Sabhi text types ke liye)
+document.getElementById("textColor").oninput = function() {
+    let obj = canvas.getActiveObject();
+    if (obj && (obj.type === "textbox" || obj.type === "text")) {
+        obj.set("fill", this.value);
+        canvas.requestRenderAll();
+    }
+};
 
 function addEmojiPicker(){
 
