@@ -232,27 +232,38 @@ function updateInputs() {
     }
 }
 
-// 2. Font badalne ka naya function (Google Fonts fix ke saath)
+// 1. Text select karte hi dropdown auto update hoga
+canvas.on('selection:created', updateInputs);
+canvas.on('selection:updated', updateInputs);
+
+function updateInputs() {
+    let obj = canvas.getActiveObject();
+    if (obj && (obj.type === "textbox" || obj.type === "text")) {
+        if (obj.fontFamily) document.getElementById("fontFamily").value = obj.fontFamily;
+        document.getElementById("fontSize").value = obj.fontSize || 40;
+    }
+}
+
+// 2. Font style badalne ka function
 function updateTextProperties() {
     let obj = canvas.getActiveObject();
     if (obj && (obj.type === "textbox" || obj.type === "text")) {
-        
         let font = document.getElementById("fontFamily").value;
         let size = document.getElementById("fontSize").value;
-
-        // Font load hone ka wait karein phir apply karein taaki glitch na ho
+        
+        // Font load hone ka wait karein phir apply karein
         document.fonts.load(`10px "${font}"`).then(function() {
-            obj.set({
-                fontFamily: font,
-                fontSize: parseInt(size) || obj.fontSize
+            obj.set({ 
+                fontFamily: font, 
+                fontSize: parseInt(size) || obj.fontSize 
             });
-            canvas.requestRenderAll(); 
+            canvas.requestRenderAll();
             saveHistory();
         });
     }
 }
 
-// 3. Real-time updates: Dropdown change karte hi font badal jayega
+// 3. Events: Bina button dabaye kaam karne ke liye
 document.getElementById("fontFamily").onchange = updateTextProperties;
 document.getElementById("fontSize").oninput = updateTextProperties;
 
