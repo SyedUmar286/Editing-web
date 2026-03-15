@@ -291,22 +291,50 @@ canvas.renderAll();
 
 }
 
-function addOutline(){
+function addOutline() {
+    let obj = canvas.getActiveObject();
+    if (obj && (obj.type === "textbox" || obj.type === "text")) {
+        // Picker aur Width input se value uthayein
+        let color = document.getElementById("outlineColor").value;
+        let width = parseInt(document.getElementById("outlineWidth").value) || 2;
 
-let obj = canvas.getActiveObject();
-
-if(obj){
-
-obj.set({
-stroke:"black",
-strokeWidth:2
-});
-
-canvas.renderAll();
-
+        // Agar outline pehle se hai to band karein (Toggle), warna naye settings lagayein
+        if (obj.strokeWidth > 0) {
+            obj.set({
+                stroke: null,
+                strokeWidth: 0
+            });
+        } else {
+            obj.set({
+                stroke: color,
+                strokeWidth: width,
+                paintFirst: 'stroke', // Isse outline bahar ki taraf dikhti hai
+                strokeLineCap: 'round',
+                strokeLineJoin: 'round'
+            });
+        }
+        canvas.requestRenderAll();
+        saveHistory();
+    }
 }
 
-}
+// Live color change ke liye (Jab picker ghumayein to foran change ho)
+document.getElementById("outlineColor").oninput = function() {
+    let obj = canvas.getActiveObject();
+    if (obj && (obj.type === "textbox" || obj.type === "text") && obj.strokeWidth > 0) {
+        obj.set("stroke", this.value);
+        canvas.requestRenderAll();
+    }
+};
+
+// Live width change ke liye
+document.getElementById("outlineWidth").oninput = function() {
+    let obj = canvas.getActiveObject();
+    if (obj && (obj.type === "textbox" || obj.type === "text") && obj.strokeWidth > 0) {
+        obj.set("strokeWidth", parseInt(this.value) || 0);
+        canvas.requestRenderAll();
+    }
+};
 
 function addShadow(){
 
