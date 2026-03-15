@@ -349,33 +349,73 @@ canvas.renderAll();
 
 }
 
-function addGradient(){
+// 1. Menu ko Smoothly Show/Hide karne ka function (Animation ke sath)
+function toggleMixMenu() {
+    let menu = document.getElementById("mixMenu");
+    let btn = document.getElementById("mixBtn");
 
-let obj = canvas.getActiveObject();
-
-if(obj){
-
-obj.set("fill", new fabric.Gradient({
-
-type:"linear",
-coords:{
-x1:0,
-y1:0,
-x2:200,
-y2:0
-},
-
-colorStops:[
-{offset:0,color:"red"},
-{offset:1,color:"yellow"}
-]
-
-}));
-
-canvas.renderAll();
-
+    if (menu.style.display === "none" || menu.style.display === "") {
+        menu.style.display = "block";
+        // Chota sa delay taaki animation nazar aaye
+        setTimeout(() => {
+            menu.style.opacity = "1";
+            menu.style.transform = "translateY(0)";
+        }, 10);
+        btn.style.transform = "scale(0.95)";
+    } else {
+        menu.style.opacity = "0";
+        menu.style.transform = "translateY(-10px)";
+        setTimeout(() => {
+            menu.style.display = "none";
+        }, 300);
+        btn.style.transform = "scale(1)";
+    }
 }
 
+// 2. Powerful Gradient Logic (1 se 5 colors mix karne ke liye)
+function addGradient() {
+    let obj = canvas.getActiveObject();
+    if (obj && (obj.type === "textbox" || obj.type === "text")) {
+        
+        // Saare pickers se colors uthana
+        let colors = [
+            document.getElementById("clr1").value,
+            document.getElementById("clr2").value,
+            document.getElementById("clr3").value,
+            document.getElementById("clr4").value,
+            document.getElementById("clr5").value
+        ];
+
+        // Logic: Agar user ne koi color change nahi kiya to bhi wo mix karega
+        let colorStops = [];
+        let totalColors = colors.length;
+
+        colors.forEach((clr, index) => {
+            colorStops.push({
+                offset: index / (totalColors - 1),
+                color: clr
+            });
+        });
+
+        obj.set("fill", new fabric.Gradient({
+            type: "linear",
+            coords: {
+                x1: 0,
+                y1: 0,
+                x2: obj.width, // Left to Right Mixing
+                y2: 0
+            },
+            colorStops: colorStops
+        }));
+
+        canvas.renderAll();
+        saveHistory();
+        
+        // Apply karne ke baad menu band kar do
+        toggleMixMenu();
+    } else {
+        alert("Bhai, pehle kisi text ko select toh karo!");
+    }
 }
 
 function undo(){
