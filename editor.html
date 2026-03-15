@@ -40,21 +40,23 @@
   
 <button onclick="addText()">Text</button>
   
-<select id="fontFamily">
-<option value="Arial">Arial</option>
-<option value="Poppins">Poppins</option>
-<option value="Bangers">Bangers</option>
-<option value="Lobster">Lobster</option>
-<option value="Anton">Anton</option>
-<option value="Oswald">Oswald</option>
-<option value="Montserrat">Montserrat</option>
-<option value="Raleway">Raleway</option>
-<option value="Pacifico">Pacifico</option>
-<option value="Playfair Display">Playfair</option>
-<option value="Rubik">Rubik</option>
-</select>
-
-<button onclick="updateTextProperties()">Font</button>
+<div style="display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle; margin: 0 10px;">
+  <span style="font-size: 11px; margin-bottom: 5px; font-weight: bold; color: #333;">CHOOSE TEXT STYLE</span>
+  <select id="fontFamily" style="padding: 5px; border-radius: 4px; border: 1px solid #ccc; cursor: pointer;">
+    <option value="" disabled selected>Normal</option>
+    <option value="Arial">Arial</option>
+    <option value="Poppins">Poppins</option>
+    <option value="Bangers">Bangers</option>
+    <option value="Lobster">Lobster</option>
+    <option value="Anton">Anton</option>
+    <option value="Oswald">Oswald</option>
+    <option value="Montserrat">Montserrat</option>
+    <option value="Raleway">Raleway</option>
+    <option value="Pacifico">Pacifico</option>
+    <option value="Playfair Display">Playfair</option>
+    <option value="Rubik">Rubik</option>
+  </select>
+</div>
 
 <button onclick="addOutline()">Outline</button>
 
@@ -87,10 +89,8 @@
 
 <button onclick="addEmojiPicker()">Add Emoji</button>  
 
-<input type="number" id="fontSize" placeholder="Font Size">
-
-<button onclick="updateTextProperties()">Set Font</button>  
-
+<input type="number" id="fontSize" placeholder="Size" style="width: 50px; padding: 5px;">
+  
 <button onclick="addEmoji()">Emoji</button>
 
 <button onclick="addTimer()">Timer</button>
