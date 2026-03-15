@@ -58,7 +58,14 @@
   </select>
 </div>
 
-<button onclick="addOutline()">Outline</button>
+<div style="display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle; margin: 0 10px; border: 1px solid #ddd; padding: 5px; border-radius: 5px; background: #f9f9f9;">
+  <span style="font-size: 10px; font-weight: bold; margin-bottom: 3px;">OUTLINE</span>
+  <div style="display: flex; gap: 5px; align-items: center;">
+    <input type="color" id="outlineColor" value="#000000" title="Outline Color" style="width: 30px; height: 25px; cursor: pointer;">
+    <input type="number" id="outlineWidth" value="2" min="1" max="10" title="Outline Width" style="width: 40px; padding: 2px;">
+    <button onclick="addOutline()" style="padding: 2px 8px;">Apply</button>
+  </div>
+</div>
 
 <button onclick="addShadow()">Shadow</button>
 
