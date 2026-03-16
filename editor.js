@@ -349,28 +349,25 @@ canvas.renderAll();
 
 }
 
-// 1. Menu ko Smoothly Show/Hide karne ka function (Animation ke sath)
 function toggleMixMenu() {
     let menu = document.getElementById("mixMenu");
     let btn = document.getElementById("mixBtn");
 
     if (menu.style.display === "none" || menu.style.display === "") {
         menu.style.display = "block";
-        // Chota sa delay taaki animation nazar aaye
         setTimeout(() => {
             menu.style.opacity = "1";
-            menu.style.transform = "translateY(0)";
+            menu.style.transform = "translateX(-50%) translateY(0)";
         }, 10);
-        btn.style.transform = "scale(0.95)";
     } else {
         menu.style.opacity = "0";
-        menu.style.transform = "translateY(-10px)";
+        menu.style.transform = "translateX(-50%) translateY(-10px)";
         setTimeout(() => {
             menu.style.display = "none";
         }, 300);
-        btn.style.transform = "scale(1)";
     }
 }
+
 
 // 2. Powerful Gradient Logic (1 se 5 colors mix karne ke liye)
 function addGradient() {
