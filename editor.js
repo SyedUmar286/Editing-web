@@ -108,9 +108,15 @@ clearInterval(interval);
 
 }
 
-function toggleDownloadMenu() {
-    let menu = document.getElementById("downloadMenu");
-    menu.style.display = (menu.style.display === "none" || menu.style.display === "") ? "block" : "none";
+function downloadAsVideo() {
+    // Jo screen par 1920x1080 dikh raha hai, wahi download hoga
+    let link = document.createElement("a");
+    link.href = canvas.toDataURL({
+        format: 'png',
+        quality: 1
+    });
+    link.download = "quiz-video-size.png";
+    link.click();
 }
 
 
