@@ -111,7 +111,7 @@ function downloadAs(type) {
     // 1. Menu band karo
     document.getElementById("downloadMenu").style.display = "none";
 
-    // Puraane size ko yaad rakho taaki baad mein reset kar saken
+    // Puraane size ko yaad rakho
     let oldWidth = canvas.getWidth();
     let oldHeight = canvas.getHeight();
 
@@ -128,33 +128,45 @@ function downloadAs(type) {
     canvas.setWidth(newWidth);
     canvas.setHeight(newHeight);
 
-    // 3. AUTO-CENTER LOGIC: Saari chizon ko naye center pe lao
+    // 3. AUTO-CENTER LOGIC
     let objects = canvas.getObjects();
-    objects.forEach(function(obj) {
-        // Purane center aur naye center ka farq nikal kar position update karna
-        let deltaX = (newWidth - oldWidth) / 2;
-        let deltaY = (newHeight - oldHeight) / 2;
+    let deltaX = (newWidth - oldWidth) / 2;
+    let deltaY = (newHeight - oldHeight) / 2;
 
+    objects.forEach(function(obj) {
         obj.set({
             left: obj.left + deltaX,
             top: obj.top + deltaY
         });
-        obj.setCoords(); // Coordinates refresh karo
+        obj.setCoords();
     });
 
+    // Sabse important: Canvas ko force-update karein
     canvas.renderAll();
+    canvas.calcOffset(); // Isse coordinates refresh hote hain
 
-    // 4. Download process
+    // 4. Download process (Thoda zyada time dein taaki bade canvas render ho sakein)
     setTimeout(() => {
-        let link = document.createElement("a");
-        link.href = canvas.toDataURL({ format: 'png', quality: 1 });
-        link.download = `quiz-${type}.png`;
-        link.click();
+        try {
+            let dataURL = canvas.toDataURL({
+                format: 'png',
+                quality: 1,
+                multiplier: 1 // High quality ke liye
+            });
 
-        // 5. RESET: Download ke baad editor ko wapis purane size aur position pe le aao
+            let link = document.createElement("a");
+            link.href = dataURL;
+            link.download = `quiz-${type}-${new Date().getTime()}.png`;
+            document.body.appendChild(link); // Safe side ke liye body mein add karein
+            link.click();
+            document.body.removeChild(link);
+        } catch (err) {
+            console.error("Download failed:", err);
+            alert("Download mein error aaya. Browser console check karein.");
+        }
+
+        // 5. RESET: Wapis purane size par le aao
         objects.forEach(function(obj) {
-            let deltaX = (newWidth - oldWidth) / 2;
-            let deltaY = (newHeight - oldHeight) / 2;
             obj.set({
                 left: obj.left - deltaX,
                 top: obj.top - deltaY
@@ -164,9 +176,11 @@ function downloadAs(type) {
         canvas.setWidth(oldWidth);
         canvas.setHeight(oldHeight);
         canvas.renderAll();
+        canvas.calcOffset();
         
-    }, 200);
-}
+    }, 500); // 200 se badha kar 500ms kar diya hai
+            }
+
 
 document.getElementById("textColor").oninput=function(){
 
