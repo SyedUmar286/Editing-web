@@ -1,87 +1,76 @@
-/* 1. Base Settings - Poori screen ko control karne ke liye */
 body {
     font-family: 'Poppins', Arial, sans-serif;
     text-align: center;
-    background: #f4f4f9;
+    background: #fafafa;
     margin: 0;
-    padding: 0;
-    overflow-x: hidden; /* Side scroll bilkul khatam */
-    width: 100vw;
+    padding: 10px;
 }
 
-/* 2. Toolbar - Buttons ko har device pe adjust karega */
+h2 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Sabse important: Toolbar jo har device pe set rahega */
 .toolbar {
-    display: flex;
-    flex-wrap: wrap;           /* Buttons ko lines mein divide karega */
-    justify-content: center;   /* Hamesha center mein rahenge */
-    gap: 8px;                  /* Buttons ke beech ka gap */
-    padding: 15px;
+    display: flex;         /* Buttons ko flexible banata hai */
+    flex-wrap: wrap;       /* Buttons line change kar lenge agar jagah kam hui */
+    justify-content: center; /* Buttons hamesha center mein rahenge */
+    gap: 10px;             /* Buttons ke beech ka gap */
     background: #ffffff;
-    border-bottom: 2px solid #ddd;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+    max-width: 100%;
 }
 
-/* 3. Buttons & Inputs - Touch aur Mouse dono ke liye perfect size */
-.toolbar button, 
-.toolbar select, 
-.toolbar input, 
-.toolbar label {
-    flex: 0 1 auto;            /* Buttons ko zaroorat ke mutabiq jagah dega */
-    min-width: 100px;          /* Zyada chote nahi honge */
-    padding: 10px 12px;
-    font-size: 13px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
+/* Sabhi buttons aur inputs ka ek jaisa professional look */
+button, select, input[type="number"], .toolbar label {
+    flex: 1 1 auto;        /* Screen ke hisab se size adjust hoga */
+    min-width: 120px;      /* Tablet par buttons chote nahi honge */
+    max-width: 200px;
+    padding: 12px 15px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
     background: #fff;
     cursor: pointer;
-    transition: 0.2s;
+    transition: all 0.3s ease;
 }
 
-/* Download Button - Hamesha alag aur bada dikhega */
+button:hover {
+    background: #f0f0f0;
+    transform: translateY(-2px);
+}
+
+/* Download button ko alag se bada aur green karo */
 button[onclick="downloadAsVideo()"] {
     background: #28a745 !important;
     color: white !important;
     font-weight: bold;
-    min-width: 180px;
+    min-width: 200px;
 }
 
-/* 4. Canvas Container - Chromebook ka scroll masla yahan solve hoga */
+/* Canvas har screen pe fit rahega */
 canvas {
-    border: 4px solid #333;
-    background-color: white;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-    
-    /* Ye hai আসল Jadoo: Canvas screen se bada nahi hoga lekin quality 1920 hi rahegi */
-    max-width: 95% !important; 
-    height: auto !important;   
-    
-    display: block;
-    margin: 20px auto;         /* Center alignment */
+    border: 3px solid #333;
+    max-width: 100%;       /* Screen se bahar nahi jayega */
+    height: auto !important;
+    margin-top: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    background: white;
 }
 
-/* 5. Special Adjustments for Chromebook & Tablets */
-@media (max-width: 1100px) {
+/* Tablet aur Mobile ke liye special settings */
+@media (max-width: 768px) {
+    button, select {
+        padding: 15px 10px;
+        font-size: 15px;    /* Tablet par thoda bada text */
+    }
+    
     .toolbar {
+        gap: 8px;
         padding: 10px;
-        gap: 5px;
-    }
-    .toolbar button, .toolbar select {
-        font-size: 12px;
-        padding: 8px 10px;
-        min-width: 80px;
-    }
-}
-
-/* 6. Mobile Fix - Agar kabhi mobile pe chalao */
-@media (max-width: 600px) {
-    .toolbar {
-        justify-content: flex-start; /* Mobile pe scrollable toolbar */
-        overflow-x: auto;
-        white-space: nowrap;
-        display: block; /* Horizontal scroll enable karne ke liye */
-    }
-    .toolbar button, .toolbar select {
-        display: inline-block;
-        margin-right: 5px;
     }
 }
