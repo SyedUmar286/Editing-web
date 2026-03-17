@@ -1,7 +1,8 @@
 const canvas = new fabric.Canvas('canvas');
 
-canvas.setWidth(1080);
-canvas.setHeight(1920);
+canvas.setWidth(1920); // YouTube Video Width
+canvas.setHeight(1080); // YouTube Video Height
+
 
 let centerX = canvas.getWidth()/2;
 let centerY = canvas.getHeight()/2;
