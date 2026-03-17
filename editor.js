@@ -107,16 +107,54 @@ clearInterval(interval);
 
 }
 
-function download(){
+// Download Menu dikhane/chhupane ke liye
+function toggleDownloadMenu() {
+    let menu = document.getElementById("downloadMenu");
+    menu.style.display = (menu.style.display === "none" || menu.style.display === "") ? "block" : "none";
+}
 
-let link=document.createElement("a");
+// Sahi size mein download karne ka logic
+function downloadAs(type) {
+    // Menu band kar do
+    document.getElementById("downloadMenu").style.display = "none";
 
-link.href=canvas.toDataURL();
+    let width, height;
 
-link.download="quiz.png";
+    if (type === 'shorts') {
+        width = 1080;
+        height = 1920;
+    } else {
+        width = 1920;
+        height = 1080; // YouTube Video / Thumbnail size
+    }
 
-link.click();
+    // 1. Pehle canvas ka size badlo
+    canvas.setWidth(width);
+    canvas.setHeight(height);
+    canvas.renderAll();
 
+    // 2. Chota sa delay taaki canvas render ho jaye, phir download
+    setTimeout(() => {
+        let link = document.createElement("a");
+        link.href = canvas.toDataURL({
+            format: 'png',
+            quality: 1
+        });
+        link.download = `quiz-${type}.png`;
+        link.click();
+        
+        // Agar aap wapis purane size pe jana chahte hain toh yahan reset kar sakte hain
+        // canvas.setWidth(1080); 
+        // canvas.setHeight(1920);
+    }, 100);
+}
+
+// Screen pe kahin bhi click ho toh download menu band ho jaye
+window.onclick = function(event) {
+    if (!event.target.matches('button')) {
+        let menu = document.getElementById("downloadMenu");
+        if (menu) menu.style.display = "none";
+    }
 }
 
 document.getElementById("textColor").oninput=function(){
