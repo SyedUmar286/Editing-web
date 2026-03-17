@@ -1,19 +1,76 @@
-body{
-font-family:Arial;
-text-align:center;
-background:#fafafa;
+body {
+    font-family: 'Poppins', Arial, sans-serif;
+    text-align: center;
+    background: #fafafa;
+    margin: 0;
+    padding: 10px;
 }
 
-canvas{
-border:2px solid #ccc;
-margin-top:20px;
+h2 {
+    color: #333;
+    margin-bottom: 20px;
 }
 
-.toolbar{
-margin-top:20px;
+/* Sabse important: Toolbar jo har device pe set rahega */
+.toolbar {
+    display: flex;         /* Buttons ko flexible banata hai */
+    flex-wrap: wrap;       /* Buttons line change kar lenge agar jagah kam hui */
+    justify-content: center; /* Buttons hamesha center mein rahenge */
+    gap: 10px;             /* Buttons ke beech ka gap */
+    background: #ffffff;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+    max-width: 100%;
 }
 
-button{
-margin:5px;
-padding:10px 15px;
+/* Sabhi buttons aur inputs ka ek jaisa professional look */
+button, select, input[type="number"], .toolbar label {
+    flex: 1 1 auto;        /* Screen ke hisab se size adjust hoga */
+    min-width: 120px;      /* Tablet par buttons chote nahi honge */
+    max-width: 200px;
+    padding: 12px 15px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #fff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background: #f0f0f0;
+    transform: translateY(-2px);
+}
+
+/* Download button ko alag se bada aur green karo */
+button[onclick="downloadAsVideo()"] {
+    background: #28a745 !important;
+    color: white !important;
+    font-weight: bold;
+    min-width: 200px;
+}
+
+/* Canvas har screen pe fit rahega */
+canvas {
+    border: 3px solid #333;
+    max-width: 100%;       /* Screen se bahar nahi jayega */
+    height: auto !important;
+    margin-top: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    background: white;
+}
+
+/* Tablet aur Mobile ke liye special settings */
+@media (max-width: 768px) {
+    button, select {
+        padding: 15px 10px;
+        font-size: 15px;    /* Tablet par thoda bada text */
+    }
+    
+    .toolbar {
+        gap: 8px;
+        padding: 10px;
+    }
 }
