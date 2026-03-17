@@ -1,3 +1,19 @@
 body{ font-family:Arial; text-align:center; background:#fafafa; }
-canvas{ border:2px solid #ccc; margin-top:20px; } .toolbar{ margin-top:20px; 
-} button{ margin:5px; padding:10px 15px; }
+canvas {
+    border: 3px solid #333;
+    background-color: white;
+    /* Ye line Chromebook ka scroll khatam kar degi */
+    max-width: 100% !important; 
+    height: auto !important;
+    display: block;
+    margin: 20px auto;
+}
+
+.toolbar {
+    display: flex;
+    flex-wrap: wrap; /* Buttons ko bikhre bina line mein rakhega */
+    justify-content: center;
+    gap: 10px;
+    padding: 15px;
+    background: #fff;
+}
