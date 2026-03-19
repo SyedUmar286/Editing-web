@@ -548,61 +548,47 @@ canvas.add(newImg);
       }
 
 function applyBgGradient() {
-    // 1. Pehle purana background clear karo (Zaroori hai!)
-    canvas.backgroundImage = null;
+    // 1. Sabse pehle purana sab clear karo
     canvas.backgroundColor = null;
+    canvas.backgroundImage = null;
 
-    // 2. Saare colors ki values uthao
-    let c1 = document.getElementById("bgClr1").value;
-    let c2 = document.getElementById("bgClr2").value;
-    let c3 = document.getElementById("bgClr3").value;
-    let c4 = document.getElementById("bgClr4").value;
-    let c5 = document.getElementById("bgClr5").value;
+    // 2. Colors ki list aur unka status check karo
+    const colors = [
+        { val: document.getElementById("bgClr1").value, use: true },
+        { val: document.getElementById("bgClr2").value, use: document.getElementById("useBg2").checked },
+        { val: document.getElementById("bgClr3").value, use: document.getElementById("useBg3").checked },
+        { val: document.getElementById("bgClr4").value, use: document.getElementById("useBg4").checked },
+        { val: document.getElementById("bgClr5").value, use: document.getElementById("useBg5").checked }
+    ];
 
-    // 3. Check karo kaunse ticked hain
-    let u2 = document.getElementById("useBg2").checked;
-    let u3 = document.getElementById("useBg3").checked;
-    let u4 = document.getElementById("useBg4").checked;
-    let u5 = document.getElementById("useBg5").checked;
+    // 3. Sirf wahi colors filter karo jo "Use" ticked hain
+    const active = colors.filter(c => c.use).map(c => c.val);
 
-    // 4. Active colors ki list banao
-    let activeColors = [c1]; // Pehla hamesha rahega
-    if(u2) activeColors.push(c2);
-    if(u3) activeColors.push(c3);
-    if(u4) activeColors.push(c4);
-    if(u5) activeColors.push(c5);
-
-    console.log("Active Colors: ", activeColors); // Console mein check karein kitne color aaye
-
-    if (activeColors.length === 1) {
-        // Sirf ek color hai toh simple background
-        canvas.setBackgroundColor(activeColors[0], function() {
-            canvas.renderAll();
-        });
+    if (active.length === 1) {
+        // Agar sirf 1 color hai
+        canvas.setBackgroundColor(active[0], () => canvas.renderAll());
     } else {
-        // Gradient logic - thoda sudhara hua
-        let gradientStops = activeColors.map((clr, index) => {
-            return {
-                offset: index / (activeColors.length - 1),
-                color: clr
-            };
-        });
+        // AGAR MIX KARNA HAI (2 ya usse zyada colors)
+        const stops = active.map((color, i) => ({
+            offset: i / (active.length - 1),
+            color: color
+        }));
 
-        let grad = new fabric.Gradient({
+        const grad = new fabric.Gradient({
             type: 'linear',
-            coords: {
-                x1: 0,
-                y1: 0,
-                x2: canvas.width,
-                y2: canvas.height // Diagonal Gradient
+            gradientUnits: 'pixels', // Pixel mode zyada accurate hota hai
+            coords: { 
+                x1: 0, 
+                y1: 0, 
+                x2: canvas.width, 
+                y2: canvas.height // Top-Left se Bottom-Right tak mix hoga
             },
-            colorStops: gradientStops
+            colorStops: stops
         });
 
-        canvas.setBackgroundColor(grad, function() {
-            canvas.renderAll();
-        });
+        canvas.setBackgroundColor(grad, () => canvas.renderAll());
     }
-    
-    saveHistory(); 
+
+    saveHistory();
+    console.log("Background Mixed Successfully!");
 }
