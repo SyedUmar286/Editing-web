@@ -44,7 +44,7 @@ scaleY:0.5
 });
 
 canvas.add(img);
-
+saveHistory(); // 👈 Ye line yahan add karni hai
 });
 
 };
@@ -95,7 +95,8 @@ fill:"red"
 });
 
 canvas.add(timer);
-
+saveHistory(); // 👈 Ye line yahan add karni hai
+    
 let count=10;
 
 let interval=setInterval(function(){
