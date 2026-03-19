@@ -422,40 +422,32 @@ function addGradient() {
     }
 }
 
-function undo(){
-
-if(history.length > 0){
-
-redoStack.push(JSON.stringify(canvas));
-
-let state = history.pop();
-
-canvas.loadFromJSON(state,function(){
-
-canvas.renderAll();
-
-});
-
+function undo() {
+    if (history.length <= 1) return;
+    
+    isRedoing = true;
+    let currentState = history.pop();
+    redoStack.push(currentState);
+    
+    let previousState = history[history.length - 1];
+    
+    canvas.loadFromJSON(previousState, function() {
+        canvas.renderAll();
+        isRedoing = false;
+    });
 }
 
-}
-
-function redo(){
-
-if(redoStack.length > 0){
-
-history.push(JSON.stringify(canvas));
-
-let state = redoStack.pop();
-
-canvas.loadFromJSON(state,function(){
-
-canvas.renderAll();
-
-});
-
-}
-
+function redo() {
+    if (redoStack.length === 0) return;
+    
+    isRedoing = true;
+    let state = redoStack.pop();
+    history.push(state);
+    
+    canvas.loadFromJSON(state, function() {
+        canvas.renderAll();
+        isRedoing = false;
+    });
 }
 
 document.addEventListener("keydown", function(e){
