@@ -11,11 +11,6 @@ let history = [];
 let redoStack = [];
 let isRedoing = false; 
 
-// BG Color function ko thoda saaf karke wapas dala hai
-document.getElementById("bg").oninput=function(){
-    canvas.setBackgroundColor(this.value,canvas.renderAll.bind(canvas));
-    saveHistory(); 
-};
 
 function saveHistory() {
     if (isRedoing) return; 
