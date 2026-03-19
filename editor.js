@@ -548,49 +548,56 @@ canvas.add(newImg);
       }
 
 function applyBgGradient() {
-    // 1. Purana background saaf karo
+    // 1. Purana background aur image clear karo
     canvas.backgroundImage = null;
+    canvas.backgroundColor = null;
 
-    // 2. Colors ki list aur Checkbox check karo
-    let colorData = [
-        { color: document.getElementById("bgClr1").value, active: true },
-        { color: document.getElementById("bgClr2").value, active: document.getElementById("useBg2").checked },
-        { color: document.getElementById("bgClr3").value, active: document.getElementById("useBg3").checked },
-        { color: document.getElementById("bgClr4").value, active: document.getElementById("useBg4").checked },
-        { color: document.getElementById("bgClr5").value, active: document.getElementById("useBg5").checked }
-    ];
+    // 2. Colors ki list uthao
+    let c1 = document.getElementById("bgClr1").value;
+    let c2 = document.getElementById("bgClr2").value;
+    let c3 = document.getElementById("bgClr3").value;
+    let c4 = document.getElementById("bgClr4").value;
+    let c5 = document.getElementById("bgClr5").value;
 
-    // 3. Sirf ticked colors nikaalo
-    let activeColors = colorData.filter(item => item.active).map(item => item.color);
+    // 3. Checkboxes status
+    let activeColors = [c1]; // Pehla hamesha active
+    if(document.getElementById("useBg2").checked) activeColors.push(c2);
+    if(document.getElementById("useBg3").checked) activeColors.push(c3);
+    if(document.getElementById("useBg4").checked) activeColors.push(c4);
+    if(document.getElementById("useBg5").checked) activeColors.push(c5);
 
     if (activeColors.length === 1) {
-        // Agar sirf 1 color hai
+        // Sirf single color
         canvas.setBackgroundColor(activeColors[0], function() {
             canvas.renderAll();
         });
     } else {
-        // --- SMOOTH MIXING LOGIC ---
+        // --- PROPER SMOOTH GRADIENT LOGIC ---
         let stops = activeColors.map((clr, index) => ({
             offset: index / (activeColors.length - 1),
             color: clr
         }));
 
-        let smoothGradient = new fabric.Gradient({
+        // Diagonal Gradient (Top-Left to Bottom-Right)
+        let grad = new fabric.Gradient({
             type: 'linear',
-            gradientUnits: 'percentage', // Isse lines nahi aayengi, smooth mix hoga
-            coords: { 
-                x1: 0, 
-                y1: 0, 
-                x2: 1, 
-                y2: 0  // Left to Right smooth mixing
+            gradientUnits: 'pixels', 
+            coords: {
+                x1: 0,
+                y1: 0,
+                x2: canvas.width,
+                y2: canvas.height
             },
             colorStops: stops
         });
 
-        canvas.setBackgroundColor(smoothGradient, function() {
+        // Background set karke render karna
+        canvas.setBackgroundColor(grad, function() {
             canvas.renderAll();
         });
     }
 
+    // 4. Forcefully sab kuch update karo
+    canvas.requestRenderAll();
     saveHistory();
 }
