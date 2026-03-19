@@ -548,47 +548,49 @@ canvas.add(newImg);
       }
 
 function applyBgGradient() {
-    // 1. Sabse pehle purana sab clear karo
-    canvas.backgroundColor = null;
+    // 1. Purana background saaf karo
     canvas.backgroundImage = null;
 
-    // 2. Colors ki list aur unka status check karo
-    const colors = [
-        { val: document.getElementById("bgClr1").value, use: true },
-        { val: document.getElementById("bgClr2").value, use: document.getElementById("useBg2").checked },
-        { val: document.getElementById("bgClr3").value, use: document.getElementById("useBg3").checked },
-        { val: document.getElementById("bgClr4").value, use: document.getElementById("useBg4").checked },
-        { val: document.getElementById("bgClr5").value, use: document.getElementById("useBg5").checked }
+    // 2. Colors ki list aur Checkbox check karo
+    let colorData = [
+        { color: document.getElementById("bgClr1").value, active: true },
+        { color: document.getElementById("bgClr2").value, active: document.getElementById("useBg2").checked },
+        { color: document.getElementById("bgClr3").value, active: document.getElementById("useBg3").checked },
+        { color: document.getElementById("bgClr4").value, active: document.getElementById("useBg4").checked },
+        { color: document.getElementById("bgClr5").value, active: document.getElementById("useBg5").checked }
     ];
 
-    // 3. Sirf wahi colors filter karo jo "Use" ticked hain
-    const active = colors.filter(c => c.use).map(c => c.val);
+    // 3. Sirf ticked colors nikaalo
+    let activeColors = colorData.filter(item => item.active).map(item => item.color);
 
-    if (active.length === 1) {
+    if (activeColors.length === 1) {
         // Agar sirf 1 color hai
-        canvas.setBackgroundColor(active[0], () => canvas.renderAll());
+        canvas.setBackgroundColor(activeColors[0], function() {
+            canvas.renderAll();
+        });
     } else {
-        // AGAR MIX KARNA HAI (2 ya usse zyada colors)
-        const stops = active.map((color, i) => ({
-            offset: i / (active.length - 1),
-            color: color
+        // --- SMOOTH MIXING LOGIC ---
+        let stops = activeColors.map((clr, index) => ({
+            offset: index / (activeColors.length - 1),
+            color: clr
         }));
 
-        const grad = new fabric.Gradient({
+        let smoothGradient = new fabric.Gradient({
             type: 'linear',
-            gradientUnits: 'pixels', // Pixel mode zyada accurate hota hai
+            gradientUnits: 'percentage', // Isse lines nahi aayengi, smooth mix hoga
             coords: { 
                 x1: 0, 
                 y1: 0, 
-                x2: canvas.width, 
-                y2: canvas.height // Top-Left se Bottom-Right tak mix hoga
+                x2: 1, 
+                y2: 0  // Left to Right smooth mixing
             },
             colorStops: stops
         });
 
-        canvas.setBackgroundColor(grad, () => canvas.renderAll());
+        canvas.setBackgroundColor(smoothGradient, function() {
+            canvas.renderAll();
+        });
     }
 
     saveHistory();
-    console.log("Background Mixed Successfully!");
 }
