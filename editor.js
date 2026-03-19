@@ -241,17 +241,7 @@ function updateInputs() {
     }
 }
 
-// 1. Text select karte hi dropdown auto update hoga
-canvas.on('selection:created', updateInputs);
-canvas.on('selection:updated', updateInputs);
 
-function updateInputs() {
-    let obj = canvas.getActiveObject();
-    if (obj && (obj.type === "textbox" || obj.type === "text")) {
-        if (obj.fontFamily) document.getElementById("fontFamily").value = obj.fontFamily;
-        document.getElementById("fontSize").value = obj.fontSize || 40;
-    }
-}
 
 // 2. Font style badalne ka function
 function updateTextProperties() {
