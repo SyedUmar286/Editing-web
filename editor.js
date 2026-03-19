@@ -548,35 +548,61 @@ canvas.add(newImg);
       }
 
 function applyBgGradient() {
-    // Check karo user ne kaunse colors choose kiye hain
-    let layers = [
-        { color: document.getElementById("bgClr1").value, active: true }, // Pehla hamesha active
-        { color: document.getElementById("bgClr2").value, active: document.getElementById("useBg2").checked },
-        { color: document.getElementById("bgClr3").value, active: document.getElementById("useBg3").checked },
-        { color: document.getElementById("bgClr4").value, active: document.getElementById("useBg4").checked },
-        { color: document.getElementById("bgClr5").value, active: document.getElementById("useBg5").checked }
-    ];
+    // 1. Pehle purana background clear karo (Zaroori hai!)
+    canvas.backgroundImage = null;
+    canvas.backgroundColor = null;
 
-    // Sirf wahi filter karo jo "Use" par tick hain
-    let activeLayers = layers.filter(l => l.active);
+    // 2. Saare colors ki values uthao
+    let c1 = document.getElementById("bgClr1").value;
+    let c2 = document.getElementById("bgClr2").value;
+    let c3 = document.getElementById("bgClr3").value;
+    let c4 = document.getElementById("bgClr4").value;
+    let c5 = document.getElementById("bgClr5").value;
 
-    if (activeLayers.length === 1) {
-        // Agar sirf ek color hai toh gradient ki zaroorat nahi
-        canvas.setBackgroundColor(activeLayers[0].color, canvas.renderAll.bind(canvas));
+    // 3. Check karo kaunse ticked hain
+    let u2 = document.getElementById("useBg2").checked;
+    let u3 = document.getElementById("useBg3").checked;
+    let u4 = document.getElementById("useBg4").checked;
+    let u5 = document.getElementById("useBg5").checked;
+
+    // 4. Active colors ki list banao
+    let activeColors = [c1]; // Pehla hamesha rahega
+    if(u2) activeColors.push(c2);
+    if(u3) activeColors.push(c3);
+    if(u4) activeColors.push(c4);
+    if(u5) activeColors.push(c5);
+
+    console.log("Active Colors: ", activeColors); // Console mein check karein kitne color aaye
+
+    if (activeColors.length === 1) {
+        // Sirf ek color hai toh simple background
+        canvas.setBackgroundColor(activeColors[0], function() {
+            canvas.renderAll();
+        });
     } else {
-        // Gradient logic
-        let colorStops = activeLayers.map((l, index) => ({
-            offset: index / (activeLayers.length - 1),
-            color: l.color
-        }));
+        // Gradient logic - thoda sudhara hua
+        let gradientStops = activeColors.map((clr, index) => {
+            return {
+                offset: index / (activeColors.length - 1),
+                color: clr
+            };
+        });
 
-        canvas.setBackgroundColor(new fabric.Gradient({
+        let grad = new fabric.Gradient({
             type: 'linear',
-            gradientUnits: 'percentage',
-            coords: { x1: 0, y1: 0, x2: 1, y2: 1 }, // Diagonal effect
-            colorStops: colorStops
-        }), canvas.renderAll.bind(canvas));
+            coords: {
+                x1: 0,
+                y1: 0,
+                x2: canvas.width,
+                y2: canvas.height // Diagonal Gradient
+            },
+            colorStops: gradientStops
+        });
+
+        canvas.setBackgroundColor(grad, function() {
+            canvas.renderAll();
+        });
     }
     
-    saveHistory(); // Undo ke liye save karo
+    saveHistory(); 
 }
