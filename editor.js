@@ -9,19 +9,24 @@ let centerY = canvas.getHeight()/2;
 
 let history = [];
 let redoStack = [];
+let isRedoing = false; 
 
+// BG Color function ko thoda saaf karke wapas dala hai
 document.getElementById("bg").oninput=function(){
-canvas.setBackgroundColor(this.value,canvas.renderAll.bind(canvas));
+    canvas.setBackgroundColor(this.value,canvas.renderAll.bind(canvas));
+    saveHistory(); 
 };
 
-canvas.on("object:added", saveHistory);
+function saveHistory() {
+    if (isRedoing) return; 
+    if (history.length > 30) history.shift(); 
+    history.push(JSON.stringify(canvas));
+    redoStack = []; 
+}
+
 canvas.on("object:modified", saveHistory);
 canvas.on("object:removed", saveHistory);
-
-function saveHistory(){
-redoStack = [];
-history.push(JSON.stringify(canvas));
-}
+// Note: object:added ko hum buttons ke andar manually call karenge.
 
 document.getElementById("upload").addEventListener("change",function(e){
 
