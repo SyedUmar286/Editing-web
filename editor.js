@@ -546,3 +546,37 @@ canvas.add(newImg);
 });
 
       }
+
+function applyBgGradient() {
+    // Check karo user ne kaunse colors choose kiye hain
+    let layers = [
+        { color: document.getElementById("bgClr1").value, active: true }, // Pehla hamesha active
+        { color: document.getElementById("bgClr2").value, active: document.getElementById("useBg2").checked },
+        { color: document.getElementById("bgClr3").value, active: document.getElementById("useBg3").checked },
+        { color: document.getElementById("bgClr4").value, active: document.getElementById("useBg4").checked },
+        { color: document.getElementById("bgClr5").value, active: document.getElementById("useBg5").checked }
+    ];
+
+    // Sirf wahi filter karo jo "Use" par tick hain
+    let activeLayers = layers.filter(l => l.active);
+
+    if (activeLayers.length === 1) {
+        // Agar sirf ek color hai toh gradient ki zaroorat nahi
+        canvas.setBackgroundColor(activeLayers[0].color, canvas.renderAll.bind(canvas));
+    } else {
+        // Gradient logic
+        let colorStops = activeLayers.map((l, index) => ({
+            offset: index / (activeLayers.length - 1),
+            color: l.color
+        }));
+
+        canvas.setBackgroundColor(new fabric.Gradient({
+            type: 'linear',
+            gradientUnits: 'percentage',
+            coords: { x1: 0, y1: 0, x2: 1, y2: 1 }, // Diagonal effect
+            colorStops: colorStops
+        }), canvas.renderAll.bind(canvas));
+    }
+    
+    saveHistory(); // Undo ke liye save karo
+}
