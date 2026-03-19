@@ -65,8 +65,9 @@ fill:"black"
 });
 
 canvas.add(text);
-
+saveHistory(); // 👈 Ye line add karni hai
 }
+    
 
 function addEmoji(){
 
@@ -79,7 +80,7 @@ fontSize:80
 });
 
 canvas.add(emoji);
-
+saveHistory(); // 👈 Ye line add karni hai
 }
 
 function addTimer(){
@@ -295,7 +296,7 @@ fontSize:60
 
 canvas.add(emojiText);
 canvas.renderAll();
-
+saveHistory(); // 👈 Ye line add karni hai
 }
 
 function addOutline() {
