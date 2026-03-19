@@ -225,22 +225,17 @@ canvas.renderAll();
 
   }
 
-// 1. Jab kisi text pe click karein, toh dropdown apne aap sahi font dikhaye
+// 2. Text select karte hi dropdown auto update hoga
 canvas.on('selection:created', updateInputs);
 canvas.on('selection:updated', updateInputs);
 
 function updateInputs() {
     let obj = canvas.getActiveObject();
     if (obj && (obj.type === "textbox" || obj.type === "text")) {
-        document.getElementById("fontFamily").value = obj.fontFamily || "Arial";
+        if (obj.fontFamily) document.getElementById("fontFamily").value = obj.fontFamily;
         document.getElementById("fontSize").value = obj.fontSize || 40;
-        let colorInput = document.getElementById("textColor");
-        if (obj.fill && obj.fill.charAt(0) === '#') {
-            colorInput.value = obj.fill;
-        }
     }
 }
-
 
 
 // 2. Font style badalne ka function
