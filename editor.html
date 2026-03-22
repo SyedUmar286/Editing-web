@@ -24,30 +24,34 @@
 <div class="toolbar">
 
 <div style="display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle; background: #e8e8e8; padding: 5px; border: 1px solid #bbb; border-radius: 4px; margin-right: 15px;">
-  <span style="font-size: 11px; font-weight: bold; margin-bottom: 5px;">BG GRADIENT MIX</span>
-  <div style="display: flex; gap: 5px;">
-    <div style="text-align:center;">
-      <input type="color" id="bgClr1" value="#ffffff" style="width:30px; height:25px;">
-      <div style="font-size:8px; color:gray;">Main</div>
-    </div>
-    <div style="text-align:center;">
-      <input type="color" id="bgClr2" value="#ff0000" style="width:30px; height:25px;">
-      <input type="checkbox" id="useBg2" checked> <span style="font-size:8px;">Use</span>
-    </div>
-    <div style="text-align:center;">
-      <input type="color" id="bgClr3" value="#00ff00" style="width:30px; height:25px;">
-      <input type="checkbox" id="useBg3"> <span style="font-size:8px;">Use</span>
-    </div>
-    <div style="text-align:center;">
-      <input type="color" id="bgClr4" value="#0000ff" style="width:30px; height:25px;">
-      <input type="checkbox" id="useBg4"> <span style="font-size:8px;">Use</span>
-    </div>
-    <div style="text-align:center;">
-      <input type="color" id="bgClr5" value="#ffff00" style="width:30px; height:25px;">
-      <input type="checkbox" id="useBg5"> <span style="font-size:8px;">Use</span>
-    </div>
+  <span style="font-size: 11px; font-weight: bold; margin-bottom: 5px; color: #333;">BG GRADIENT MIX (LIVE)</span>
+  <div style="display: flex; gap: 5px; align-items: center;">
     
-    <button onclick="applyBgGradient()" style="font-size: 10px; cursor: pointer; background: #333; color: white; border: none; border-radius: 3px; padding: 0 5px;">Apply BG</button>
+    <div style="text-align:center;">
+      <input type="color" id="bgClr1" value="#ffffff" onchange="applyBgGradient()" style="width:30px; height:25px; cursor:pointer; border:1px solid #999;">
+      <div style="font-size:8px; color:gray; font-weight:bold;">Main</div>
+    </div>
+
+    <div style="text-align:center;">
+      <input type="color" id="bgClr2" value="#ff0000" onchange="applyBgGradient()" style="width:30px; height:25px; cursor:pointer; border:1px solid #999;">
+      <div style="margin-top:2px;"><input type="checkbox" id="useBg2" checked onchange="applyBgGradient()"> <span style="font-size:8px;">Use</span></div>
+    </div>
+
+    <div style="text-align:center;">
+      <input type="color" id="bgClr3" value="#00ff00" onchange="applyBgGradient()" style="width:30px; height:25px; cursor:pointer; border:1px solid #999;">
+      <div style="margin-top:2px;"><input type="checkbox" id="useBg3" onchange="applyBgGradient()"> <span style="font-size:8px;">Use</span></div>
+    </div>
+
+    <div style="text-align:center;">
+      <input type="color" id="bgClr4" value="#0000ff" onchange="applyBgGradient()" style="width:30px; height:25px; cursor:pointer; border:1px solid #999;">
+      <div style="margin-top:2px;"><input type="checkbox" id="useBg4" onchange="applyBgGradient()"> <span style="font-size:8px;">Use</span></div>
+    </div>
+
+    <div style="text-align:center;">
+      <input type="color" id="bgClr5" value="#ffff00" onchange="applyBgGradient()" style="width:30px; height:25px; cursor:pointer; border:1px solid #999;">
+      <div style="margin-top:2px;"><input type="checkbox" id="useBg5" onchange="applyBgGradient()"> <span style="font-size:8px;">Use</span></div>
+    </div>
+
   </div>
 </div>
   
