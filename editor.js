@@ -548,44 +548,62 @@ canvas.add(newImg);
       }
 
 function applyBgGradient() {
-    // 1. Purana background aur image clear karein
-    canvas.backgroundImage = null;
+    // 1. Purana background aur purani gradient layer saaf karo
+    canvas.setBackgroundColor('', canvas.renderAll.bind(canvas));
+    
+    // Check karo agar pehle se koi gradient layer hai toh use hata do
+    let oldGrad = canvas.getObjects().find(obj => obj.id === 'mainGradientBg');
+    if (oldGrad) canvas.remove(oldGrad);
 
-    // 2. Data collect karein
-    const config = [
-        { color: document.getElementById("bgClr1").value, active: true },
-        { color: document.getElementById("bgClr2").value, active: document.getElementById("useBg2").checked },
-        { color: document.getElementById("bgClr3").value, active: document.getElementById("useBg3").checked },
-        { color: document.getElementById("bgClr4").value, active: document.getElementById("useBg4").checked },
-        { color: document.getElementById("bgClr5").value, active: document.getElementById("useBg5").checked }
+    // 2. Ticked Colors ki list banao
+    let colorInputs = [
+        { c: document.getElementById("bgClr1").value, active: true },
+        { c: document.getElementById("bgClr2").value, active: document.getElementById("useBg2").checked },
+        { c: document.getElementById("bgClr3").value, active: document.getElementById("useBg3").checked },
+        { c: document.getElementById("bgClr4").value, active: document.getElementById("useBg4").checked },
+        { c: document.getElementById("bgClr5").value, active: document.getElementById("useBg5").checked }
     ];
 
-    // 3. Sirf ticked colors nikaalein
-    const activeColors = config.filter(item => item.active).map(item => item.color);
+    let activeColors = colorInputs.filter(item => item.active).map(item => item.c);
 
+    // 3. Professional Gradient Object
+    let gradientSettings;
+    
     if (activeColors.length === 1) {
-        // Single color mode
-        canvas.setBackgroundColor(activeColors[0], () => canvas.renderAll());
+        // Agar 1 color hai toh simple solid color
+        canvas.setBackgroundColor(activeColors[0], canvas.renderAll.bind(canvas));
     } else {
-        // --- PROFESSIONAL SMOOTH BLENDING ---
-        const stops = activeColors.map((clr, i) => ({
+        // PROFESSIONAL MIXING: Color stops create karna
+        let stops = activeColors.map((color, i) => ({
             offset: i / (activeColors.length - 1),
-            color: clr
+            color: color
         }));
 
-        // Percentage based linear gradient (No lines, only smooth mix)
-        const gradient = new fabric.Gradient({
+        // Badi websites 'linear' mixing use karti hain diagonal coords ke saath
+        gradientSettings = new fabric.Gradient({
             type: 'linear',
-            gradientUnits: 'percentage', 
-            coords: { x1: 0, y1: 0, x2: 1, y2: 0 }, // Left to Right Smooth
+            gradientUnits: 'percentage',
+            coords: { x1: 0, y1: 0, x2: 1, y2: 1 }, // Top-left to Bottom-right (Smooth Mix)
             colorStops: stops
         });
 
-        canvas.setBackgroundColor(gradient, () => canvas.renderAll());
+        // 4. Aik Rect (Rectangle) banao jo pure canvas ke peeche rahega
+        // Yehi wo secret hai jo professional web apps use karti hain
+        let backgroundRect = new fabric.Rect({
+            left: 0,
+            top: 0,
+            width: canvas.width,
+            height: canvas.height,
+            fill: gradientSettings,
+            selectable: false,
+            evented: false,
+            id: 'mainGradientBg'
+        });
+
+        canvas.add(backgroundRect);
+        canvas.sendToBack(backgroundRect); // Isse ye hamesha sabse neeche rahega
     }
 
-    // Save history (Undo/Redo ke liye)
-    if (!isRedoing) {
-        saveHistory();
-    }
+    canvas.renderAll();
+    saveHistory();
 }
