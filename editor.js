@@ -20,9 +20,6 @@ fitCanvasToScreen();
 let centerX = 1920 / 2;
 let centerY = 1080 / 2;
 
-let centerX = canvas.getWidth()/2;
-let centerY = canvas.getHeight()/2;
-
 let history = [];
 let redoStack = [];
 let isRedoing = false; 
