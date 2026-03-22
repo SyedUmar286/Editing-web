@@ -1,8 +1,24 @@
-const canvas = new fabric.Canvas('canvas');
+const canvas = new fabric.Canvas('canvas', {
+    width: 1920,
+    height: 1080,
+    backgroundColor: '#ffffff',
+    preserveObjectStacking: true 
+});
 
-canvas.setWidth(1920); // YouTube Video Width
-canvas.setHeight(1080); // YouTube Video Height
+// Ye function canvas ko screen par fit karega (YouTube size 16:9 maintain rakhega)
+function fitCanvasToScreen() {
+    const canvasEl = document.getElementById('canvas');
+    canvasEl.style.width = '100%'; 
+    canvasEl.style.maxWidth = '900px'; // Editor screen par sahi dikhega
+    canvasEl.style.height = 'auto';
+    canvasEl.style.border = '5px solid #333';
+    canvasEl.style.display = 'block';
+    canvasEl.style.margin = '10px auto';
+}
+fitCanvasToScreen();
 
+let centerX = 1920 / 2;
+let centerY = 1080 / 2;
 
 let centerX = canvas.getWidth()/2;
 let centerY = canvas.getHeight()/2;
@@ -127,7 +143,7 @@ document.getElementById("textColor").oninput=function(){
 
 let obj = canvas.getActiveObject();
 
-if(obj && obj.type==="textbox"){
+if(obj && (obj.type === "textbox" || obj.type === "text")){    
 
 obj.set("fill", this.value);
 
@@ -551,11 +567,10 @@ function applyBgGradient() {
     // 1. Purana background aur purani gradient layer saaf karo
     canvas.setBackgroundColor('', canvas.renderAll.bind(canvas));
     
-    // Check karo agar pehle se koi gradient layer hai toh use hata do
     let oldGrad = canvas.getObjects().find(obj => obj.id === 'mainGradientBg');
     if (oldGrad) canvas.remove(oldGrad);
 
-    // 2. Ticked Colors ki list banao
+    // 2. Colors check karo
     let colorInputs = [
         { c: document.getElementById("bgClr1").value, active: true },
         { c: document.getElementById("bgClr2").value, active: document.getElementById("useBg2").checked },
@@ -566,34 +581,28 @@ function applyBgGradient() {
 
     let activeColors = colorInputs.filter(item => item.active).map(item => item.c);
 
-    // 3. Professional Gradient Object
-    let gradientSettings;
-    
     if (activeColors.length === 1) {
-        // Agar 1 color hai toh simple solid color
+        // Sirf ek color hai toh simple background
         canvas.setBackgroundColor(activeColors[0], canvas.renderAll.bind(canvas));
     } else {
-        // PROFESSIONAL MIXING: Color stops create karna
+        // Professional Mixing (Badi Web Logic)
         let stops = activeColors.map((color, i) => ({
             offset: i / (activeColors.length - 1),
             color: color
         }));
 
-        // Badi websites 'linear' mixing use karti hain diagonal coords ke saath
-        gradientSettings = new fabric.Gradient({
+        let gradientSettings = new fabric.Gradient({
             type: 'linear',
             gradientUnits: 'percentage',
-            coords: { x1: 0, y1: 0, x2: 1, y2: 1 }, // Top-left to Bottom-right (Smooth Mix)
+            coords: { x1: 0, y1: 0, x2: 1, y2: 1 }, // Diagonal mix (Mazedar Look)
             colorStops: stops
         });
 
-        // 4. Aik Rect (Rectangle) banao jo pure canvas ke peeche rahega
-        // Yehi wo secret hai jo professional web apps use karti hain
         let backgroundRect = new fabric.Rect({
             left: 0,
             top: 0,
-            width: canvas.width,
-            height: canvas.height,
+            width: 1920, // Fix YouTube Width
+            height: 1080, // Fix YouTube Height
             fill: gradientSettings,
             selectable: false,
             evented: false,
@@ -601,7 +610,7 @@ function applyBgGradient() {
         });
 
         canvas.add(backgroundRect);
-        canvas.sendToBack(backgroundRect); // Isse ye hamesha sabse neeche rahega
+        canvas.sendToBack(backgroundRect);
     }
 
     canvas.renderAll();
